@@ -85,13 +85,13 @@ class AddPodcastTrackAction extends Action
                 if (move_uploaded_file($mp3, $destination)) {
 
                     if (isset($_SESSION["playlist"])) {
-                       print "<p> téléchargement avec succès </p>";
+                        print "<p> téléchargement avec succès </p>";
                     } else {
-                        print "<p> la playlist ". $nomPlaylist . " n'existe pas <p>";
+                        print "<p> la playlist " . $nomPlaylist . " n'existe pas <p>";
                     }
-                    
 
-                    
+
+
                 } else {
                     return "<p> téléchargement non valide</p>";
                 }
@@ -117,9 +117,18 @@ class AddPodcastTrackAction extends Action
 
                 $html = "";
 
-                foreach ($_SESSION["playlist"]->liste_pistes  as $value) {
+                foreach ($_SESSION["playlist"]->liste_pistes as $value) {
 
-                    $trackRender = new \Iutnc\Deefy\Render\PodcastRender($value);
+                    if ($value instanceof \Iutnc\Deefy\Audio\Track\AlbumTrack) {
+
+                        $trackRender = new \Iutnc\Deefy\Render\AlbumTrackRender($value);
+
+                    } elseif ($value instanceof \Iutnc\Deefy\Audio\Track\PodcastTrack) {
+
+                        $trackRender = new \Iutnc\Deefy\Render\PodcastRender($value);
+
+                    }
+
                     $html .= $trackRender->render(2);
                 }
 

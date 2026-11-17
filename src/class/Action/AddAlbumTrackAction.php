@@ -141,10 +141,6 @@ class AddAlbumTrackAction extends Action
                 }
 
 
-
-
-
-
                 $res = <<<HTML
                     $html
                     <a href="?action=add-track-podcast">Ajouter encore un podcast</a>
