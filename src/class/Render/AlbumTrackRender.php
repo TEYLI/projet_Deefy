@@ -35,34 +35,36 @@ class AlbumTrackRender extends AudioTrackRender
     {
         $res = "";
         $data = json_decode($this->albumTrack);
+        $title = htmlspecialchars($data->title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $album = htmlspecialchars($data->album, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $trackNumber = htmlspecialchars((string) $data->numero_pistes, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $audioFile = htmlspecialchars($data->nom_fichier, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         switch ($selector) {
             case Renderer::COMPACT:
                 $res =
-                    "<audio controls>
-                <source src= \"$data->nom_fichier\" type=\"audio/mpeg\">
-                </audio>
-                
-                <p> $data->title-$data->album </p> 
-                ";
+                    '<div class="card card-body track-card">' .
+                    "<p class=\"fw-semibold mb-2\">$title — $album</p>" .
+                    "<audio class=\"w-100\" controls>" .
+                    "<source src=\"$audioFile\" type=\"audio/mpeg\">" .
+                    "</audio></div>";
                 break;
 
             case Renderer::LONG:
                 $res =
-                    "<audio controls>
-                <source src= \"$data->nom_fichier\" type=\"audio/mpeg\">
-                </audio>
-                
-                <p>$data->numero_pistes-$data->title-$data->album </p> 
-                ";
+                    '<div class="card card-body track-card">' .
+                    "<p class=\"fw-semibold mb-2\">Piste $trackNumber — $title — $album</p>" .
+                    "<audio class=\"w-100\" controls>" .
+                    "<source src=\"$audioFile\" type=\"audio/mpeg\">" .
+                    "</audio></div>";
                 break;
 
             default:
                 $res =
                     "<audio controls>
-                <source src= \"$data->nom_fichier\" type=\"audio/mpeg\">
+                <source src=\"$audioFile\" type=\"audio/mpeg\">
                 </audio>
                 
-                <p> $data->title-$data->album </p> 
+                <p> $title-$album </p>
                 ";
                 break;
         }
@@ -71,5 +73,3 @@ class AlbumTrackRender extends AudioTrackRender
     }
 
 }
-
-

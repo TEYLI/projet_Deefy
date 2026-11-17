@@ -25,34 +25,36 @@ final class PodcastRender  extends AudioTrackRender
     {
         $res = "";
         $data = json_decode($this->podcasts);
+        $title = htmlspecialchars($data->title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $date = htmlspecialchars($data->date, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $audioFile = htmlspecialchars($data->nom_fichier, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         switch ($selector) {
             case Renderer::COMPACT:
                 $res =
-                    "<audio controls>
-                <source src= \"$data->nom_fichier\" type=\"audio/mpeg\">
-                </audio>
-                
-                <p> $data->title</p> 
-                ";
+                    '<div class="card card-body track-card">' .
+                    "<p class=\"fw-semibold mb-2\">$title</p>" .
+                    "<audio class=\"w-100\" controls>" .
+                    "<source src=\"$audioFile\" type=\"audio/mpeg\">" .
+                    "</audio></div>";
                 break;
 
             case Renderer::LONG:
                 $res =
-                    "<audio controls>
-                <source src= \"$data->nom_fichier\" type=\"audio/mpeg\">
-                </audio>
-                
-                <p>$data->date-$data->title</p> 
-                ";
+                    '<div class="card card-body track-card">' .
+                    "<p class=\"fw-semibold mb-2\">$title</p>" .
+                    "<p class=\"text-secondary small mb-2\">Publié le $date</p>" .
+                    "<audio class=\"w-100\" controls>" .
+                    "<source src=\"$audioFile\" type=\"audio/mpeg\">" .
+                    "</audio></div>";
                 break;
 
             default:
                 $res =
                     "<audio controls>
-                <source src= \"$data->nom_fichier\" type=\"audio/mpeg\">
+                <source src=\"$audioFile\" type=\"audio/mpeg\">
                 </audio>
                 
-                <p> $data->title-$data-> </p> 
+                <p> $title </p>
                 ";
                 break;
         }

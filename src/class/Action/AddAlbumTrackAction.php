@@ -18,48 +18,48 @@ class AddAlbumTrackAction extends Action
 
         if ($this->http_method === "GET") {
             $res = <<<HTML
-                <form method="post" action="?action=add-track-album" enctype="multipart/form-data">
-                    <label> titre piste: </label>
-                    <input type="text" name="titre" required>
-
-                    <br>
-
-                    <label> fichier mp3: </label>
-                    <input type="file" name="mp3" required>
-
-                    <br>
-
-                    <label> album : </label>
-                    <input type="text" name="album" required>
-
-                    <br>
-
-                
-
-                    <label> année : </label>
-                    <input type="number" name="année" required>
-
-                    <label> duree en s :</label>
-                    <input type="number" name="temps" required>
-
-                    <br>
-
-                    <label> genre :</label>
-                    <input type="text" name="genre" required>
-
-                    <br>
-
-                    <label> auteur :</label>
-                    <input type="text" name="auteur" required>
-
-                    <br>
-
-                    <label>  playlist :  </label>
-                    <input type="texte" name="nomPlaylist" required>
-
-
-                    <button type="submit"> créer</button>
-                </form>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-4">
+                                <h1 class="h3 mb-4">Ajouter une piste d'album</h1>
+                                <form method="post" action="?action=add-track-album" enctype="multipart/form-data">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="album-title">Titre de la piste</label>
+                                            <input class="form-control" id="album-title" type="text" name="titre" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="album-file">Fichier MP3</label>
+                                            <input class="form-control" id="album-file" type="file" name="mp3" accept=".mp3,audio/mpeg" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="album-name">Album</label>
+                                            <input class="form-control" id="album-name" type="text" name="album" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="album-year">Année</label>
+                                            <input class="form-control" id="album-year" type="number" name="année" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="album-duration">Durée (s)</label>
+                                            <input class="form-control" id="album-duration" type="number" name="temps" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label" for="album-genre">Genre</label>
+                                            <input class="form-control" id="album-genre" type="text" name="genre" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label" for="album-author">Auteur</label>
+                                            <input class="form-control" id="album-author" type="text" name="auteur" required>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary mt-4" type="submit">Ajouter</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
               HTML;
         } else {
             //values input

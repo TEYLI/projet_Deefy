@@ -25,16 +25,24 @@ class DisplayPlaylistAction extends Action
         $tab_playlist = $repo->get_all_playlist();
 
         if (empty($tab_playlist)) {
-            return '<p>Aucune playlist enregistrée. <a href="?action=add-playlist">Créer une playlist</a></p>';
+            return '<div class="alert alert-info d-flex justify-content-between align-items-center">Aucune playlist enregistrée.<a class="btn btn-primary btn-sm" href="?action=add-playlist">Créer une playlist</a></div>';
         }
 
+        $res .= '<div class="row g-3">';
         foreach ($tab_playlist as $key => $value) {
             $render = new AudioListRenderer($value);
             $id = $value->getID();
             $res .= <<<HTML
-                <a href="?action=select-playlist&id=$id">{$render->render(1)} </a>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a class="text-decoration-none text-dark" href="?action=select-playlist&id=$id">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">{$render->render(1)}</div>
+                        </div>
+                    </a>
+                </div>
             HTML;
         }
+        $res .= '</div>';
 
 
 

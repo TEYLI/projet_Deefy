@@ -17,11 +17,22 @@ class AddPlaylistAction extends Action
     {
         if ($this->http_method === "GET") {
             return <<<HTML
-                <form method="post" action="?action=add-playlist">
-                    <label>Titre Playlist : </label>
-                    <input type="text" name="addPlaylist" required>
-                    <button type="submit">Créer</button>
-                </form>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 col-lg-6">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-4">
+                                <h1 class="h3 mb-4">Créer une playlist</h1>
+                                <form method="post" action="?action=add-playlist">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="playlist-name">Titre de la playlist</label>
+                                        <input class="form-control" id="playlist-name" type="text" name="addPlaylist" required>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Créer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             HTML;
         }
 
