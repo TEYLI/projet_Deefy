@@ -2,9 +2,9 @@
 
 namespace Iutnc\Deefy\Action;
 
-use Iutnc\Deefy\Repository\DeefyRepository;
-use Iutnc\Deefy\Render\AudioListRenderer;
 
+use \Iutnc\Deefy\repository\DeefyRepository;
+use \Iutnc\Deefy\Render\AudioListRenderer;
 class DisplayPlaylistAction extends Action
 {
     public function __construct()
@@ -14,27 +14,29 @@ class DisplayPlaylistAction extends Action
 
     public function execute(): string
     {
-        if (!isset($_GET['id'])) {
-            return "<p>Identifiant de playlist manquant.</p>";
-        }
 
-        $id = (int)$_GET['id'];
+
+        
+        $path = __DIR__ . '/../repository/db.config.ini';
+        DeefyRepository::setConfig($path);
+
+
         $repo = DeefyRepository::getInstance();
-        $playlist = $repo->findPlaylistById($id);
 
-        if ($playlist === null) {
-            return "<p>Playlist introuvable.</p>";
+        $res = "";
+
+        $tab = $repo->get_all_playlist();
+
+        foreach ($tab as $key => $value) {
+            $render = new AudioListRenderer($value);
+            $res .= <<<HTML
+                <a href="?action=add-track-podcast">{$render->render(1)} </a>
+            HTML;
         }
 
-        $_SESSION['playlist'] = $playlist;
 
-        $renderer = new AudioListRenderer($playlist);
-        $html = $renderer->render(1);
 
-        return <<<HTML
-            $html
-            <a href="?action=add-track-podcast">Ajouter un podcast</a> |
-            <a href="?action=add-track-album">Ajouter une piste d'album</a>
-        HTML;
+        return $res;
+
     }
 }

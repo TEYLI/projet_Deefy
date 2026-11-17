@@ -38,6 +38,8 @@ class Dispatcher
                 <a href="?action=playlists">Mes playlists</a> |
                 <a href="?action=current-playlist">Playlist courante</a> |
                 <a href="?action=add-playlist">Créer playlist</a>
+
+
                 $html
             </body>
         </html>
