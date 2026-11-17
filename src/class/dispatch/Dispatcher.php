@@ -14,51 +14,14 @@ class Dispatcher
         return $this;
     }
     public function run(): void
-    {
-
-        if (isset($this->action_tab[$this->action])) {
-
-
-            switch ($this->action) {
-
-                case 'add-playlist':
-                    $add = new $this->action_tab['add-playlist'];
-                    $this->renderPage($add->execute());
-                    break;
-                case 'playlist':
-                    $playlist = new $this->action_tab['playlist'];
-                    $this->renderPage($playlist->execute());
-                    break;
-                case 'default':
-                    $default = new $this->action_tab['default'];
-                    $this->renderPage($default->execute());
-                    break;
-                case 'add-track-podcast':
-                    $add_track_podcast = new $this->action_tab['add-track-podcast'];
-                    $this->renderPage($add_track_podcast->execute());
-                    break;
-                case 'add-track-album':
-                    $add_track_album = new $this->action_tab['add-track-album'];
-                    $this->renderPage($add_track_album->execute());
-                    break;
-                case 'add-user':
-                    $add_user = new $this->action_tab['add-user'];
-                    $this->renderPage($add_user->execute());
-                    break;
-                default:
-                    $default = new $this->action_tab['default'];
-                    $this->renderPage($default->execute());
-                    break;
-
-            }
-
-        } else {
-            
-            throw new \Exception("Action '{$this->action}' not found");
-        }
-
+{
+    if (isset($this->action_tab[$this->action])) {
+        $actionInstance = new $this->action_tab[$this->action]();
+        $this->renderPage($actionInstance->execute());
+    } else {
+        throw new \Exception("Action '{$this->action}' not found");
     }
-
+}
     private function renderPage(string $html): void
     {
         echo <<<HTML
@@ -71,11 +34,10 @@ class Dispatcher
             </head>
             <body>
 
-                <header>
-                    <a href="?action=default">accueille</a>
-                    <a href="?action=add-playlist">créer playlist</a>
-                    <a href="?action=add-user">inscription</a>
-                </header>
+                <a href="?action=default">Accueil</a> |
+                <a href="?action=playlists">Mes playlists</a> |
+                <a href="?action=current-playlist">Playlist courante</a> |
+                <a href="?action=add-playlist">Créer playlist</a>
                 $html
             </body>
         </html>
