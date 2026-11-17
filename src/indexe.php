@@ -13,7 +13,7 @@ $dispatcher = new \Iutnc\Deefy\dispatch\Dispatcher();
 
 $dispatcher
     ->addRoute('default', \Iutnc\Deefy\Action\DefaultAction::class)
-    ->addRoute('playlists', \Iutnc\Deefy\Action\DisplayAllPlaylistsAction::class)
+    ->addRoute('playlists', \Iutnc\Deefy\Action\DisplayPlaylistAction::class)
     ->addRoute('display-playlist', \Iutnc\Deefy\Action\DisplayPlaylistAction::class)
     ->addRoute('current-playlist', \Iutnc\Deefy\Action\DisplayCurrentPlaylistAction::class)
     ->addRoute('add-playlist', \Iutnc\Deefy\Action\AddPlaylistAction::class)

@@ -3,7 +3,7 @@
 namespace Iutnc\Deefy\Action;
 
 
-use \Iutnc\Deefy\repository\DeefyRepository;
+use \Iutnc\Deefy\Repository\DeefyRepository;
 use \Iutnc\Deefy\Render\AudioListRenderer;
 class DisplayPlaylistAction extends Action
 {
@@ -17,7 +17,7 @@ class DisplayPlaylistAction extends Action
 
 
         
-        $path = __DIR__ . '/../repository/db.config.ini';
+        $path = __DIR__ . '/../../../db.config.ini';;
         DeefyRepository::setConfig($path);
 
 

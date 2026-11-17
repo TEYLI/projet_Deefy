@@ -1,6 +1,6 @@
 <?php
 
-namespace Seance7\Iutnc\Deefy\Loader;
+namespace Iutnc\Deefy\Loader;
 
 class Psr4ClassLoader
 {
