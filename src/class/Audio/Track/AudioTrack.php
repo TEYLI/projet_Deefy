@@ -14,6 +14,7 @@ class AudioTrack
     protected array $liste_pistes;
     
     protected string $nom_fichier;
+    protected int $id;
 
     public function __construct(string $title, string $nom_fichier){
         $this->title = $title;

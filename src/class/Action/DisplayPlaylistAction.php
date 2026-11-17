@@ -17,20 +17,22 @@ class DisplayPlaylistAction extends Action
 
 
         
-        $path = __DIR__ . '/../../../db.config.ini';;
-        DeefyRepository::setConfig($path);
-
 
         $repo = DeefyRepository::getInstance();
 
         $res = "";
 
-        $tab = $repo->get_all_playlist();
+        $tab_playlist = $repo->get_all_playlist();
 
-        foreach ($tab as $key => $value) {
+        if (empty($tab_playlist)) {
+            return '<p>Aucune playlist enregistrée. <a href="?action=add-playlist">Créer une playlist</a></p>';
+        }
+
+        foreach ($tab_playlist as $key => $value) {
             $render = new AudioListRenderer($value);
+            $id = $value->getID();
             $res .= <<<HTML
-                <a href="?action=add-track-podcast">{$render->render(1)} </a>
+                <a href="?action=select-playlist&id=$id">{$render->render(1)} </a>
             HTML;
         }
 

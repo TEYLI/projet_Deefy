@@ -45,7 +45,7 @@ class DeefyRepository
         ];
     }
 
-    // F4 : Sauvegarder une playlist vide et récupérer son ID
+    
     public function saveEmptyPlaylist(Playlists $pk): Playlists
     {
         $query = "INSERT INTO playlist (nom) VALUES (:nom)";
@@ -55,7 +55,7 @@ class DeefyRepository
         return $pk;
     }
 
-    // F1 : Récupérer toutes les playlists avec leur ID
+   
     public function get_all_playlist(): array
     {
         $tab_playlists = [];
@@ -70,7 +70,7 @@ class DeefyRepository
         return $tab_playlists;
     }
 
-    // F2 : Charger une playlist complète et toutes ses pistes par son ID
+    
     public function findPlaylistById(int $id): ?Playlists
     {
         $stmt = $this->pdo->prepare("SELECT id, nom FROM playlist WHERE id = :id");
@@ -111,7 +111,7 @@ class DeefyRepository
         return $playlist;
     }
 
-    // F3 : Sauvegarder une piste (AlbumTrack ou PodcastTrack)
+   
     public function savePiste(AudioTrack $piste): AudioTrack
     {
         if ($piste instanceof AlbumTrack) {
@@ -149,7 +149,7 @@ class DeefyRepository
         }
     }
 
-    // F3 : Lier une piste enregistrée à une playlist dans playlist2track
+    
     public function addTrackToPlaylist(int $idPlaylist, int $idTrack, int $noPiste): void
     {
         $query = "INSERT INTO playlist2track (id_pl, id_track, no_piste_dans_liste) 

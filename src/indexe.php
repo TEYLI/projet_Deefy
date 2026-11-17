@@ -18,6 +18,7 @@ $dispatcher
     ->addRoute('current-playlist', \Iutnc\Deefy\Action\DisplayCurrentPlaylistAction::class)
     ->addRoute('add-playlist', \Iutnc\Deefy\Action\AddPlaylistAction::class)
     ->addRoute('add-track-podcast', \Iutnc\Deefy\Action\AddPodcastTrackAction::class)
-    ->addRoute('add-track-album', \Iutnc\Deefy\Action\AddAlbumTrackAction::class);
+    ->addRoute('add-track-album', \Iutnc\Deefy\Action\AddAlbumTrackAction::class)
+    ->addRoute('select-playlist', \Iutnc\Deefy\Action\SelectPlaylistAction::class);
 
 $dispatcher->run();

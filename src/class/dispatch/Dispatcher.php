@@ -14,14 +14,14 @@ class Dispatcher
         return $this;
     }
     public function run(): void
-{
-    if (isset($this->action_tab[$this->action])) {
-        $actionInstance = new $this->action_tab[$this->action]();
-        $this->renderPage($actionInstance->execute());
-    } else {
-        throw new \Exception("Action '{$this->action}' not found");
+    {
+        if (isset($this->action_tab[$this->action])) {
+            $actionInstance = new $this->action_tab[$this->action]();
+            $this->renderPage($actionInstance->execute());
+        } else {
+            throw new \Exception("Action '{$this->action}' not found");
+        }
     }
-}
     private function renderPage(string $html): void
     {
         echo <<<HTML
