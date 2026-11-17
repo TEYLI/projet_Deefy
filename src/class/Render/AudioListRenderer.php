@@ -14,20 +14,34 @@ class AudioListRenderer implements Renderer
 
     public function render(int $selector): string
     {
-        $nom = htmlspecialchars($this->audioList->nom);
-        $res = "<h3>$nom</h3>";
+        $res = "";
+        switch ($selector) {
+            case Renderer::COMPACT:
+                $nom = htmlspecialchars($this->audioList->nom);
+                $res = "<h3>$nom</h3>";
+                break;
 
-        foreach ($this->audioList->liste_pistes as $value) {
-            if ($value instanceof AlbumTrack) {
-                $track = new AlbumTrackRender($value);
-            } else {
-                $track = new PodcastRender($value);
-            }
-            $res .= $track->render(Renderer::COMPACT);
+            case Renderer::LONG:
+                $nom = htmlspecialchars($this->audioList->nom);
+                $res = "<h3>$nom</h3>";
+                $res .= "<p>Nombre de pistes : {$this->audioList->nb_pistes}</p>";
+                $res .= "<p>Durée totale : {$this->audioList->duree_total} s</p>";
+
+                foreach ($this->audioList->liste_pistes as $value) {
+                    if ($value instanceof AlbumTrack) {
+                        $track = new AlbumTrackRender($value);
+                    } else {
+                        $track = new PodcastRender($value);
+                    }
+                    $res .= $track->render($selector);
+                }
+                break;
+
+            default:
+                $nom = htmlspecialchars($this->audioList->nom);
+                $res = "<h3>$nom</h3>";
+                break;
         }
-
-        $res .= "<p>Nombre de pistes : {$this->audioList->nb_pistes}</p>";
-        $res .= "<p>Durée totale : {$this->audioList->duree_total} s</p>";
 
         return $res;
     }

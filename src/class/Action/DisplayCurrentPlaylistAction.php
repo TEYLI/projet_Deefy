@@ -23,7 +23,7 @@ class DisplayCurrentPlaylistAction extends Action
         }
 
         $renderer = new AudioListRenderer($_SESSION['playlist']);
-        $html = $renderer->render(1);
+        $html = $renderer->render(2);
 
         return <<<HTML
             $html
