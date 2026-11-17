@@ -29,7 +29,7 @@ class AddPlaylistAction extends Action
             if (isset($_POST["addPlaylist"])) {
                 $titre = filter_var($_POST["addPlaylist"], FILTER_SANITIZE_SPECIAL_CHARS);
                 $playlist = new \Iutnc\Deefy\Audio\Lists\Playlists($titre);
-                $_SESSION["playlist"][$_POST["addPlaylist"]] = $playlist;
+                $_SESSION["playlist"] = $playlist;
 
 
                 $audioRender = new \Iutnc\Deefy\Render\AudioListRenderer($playlist);
