@@ -1,5 +1,8 @@
 <?php
 namespace Iutnc\Deefy\Action;
+
+use \Iutnc\Deefy\repository\DeefyRepository;
+use \Iutnc\Deefy\Render\AudioListRenderer;
 class DisplayPlaylistAction extends Action
 {
 
@@ -13,22 +16,24 @@ class DisplayPlaylistAction extends Action
     {
 
         
+        $path = __DIR__ . '/../repository/db.config.ini';
+        DeefyRepository::setConfig($path);
+
+
+        $repo = DeefyRepository::getInstance();
 
         $res = "";
 
-        if ((isset($_SESSION["playlist"]))) {
+        $tab = $repo->get_all_playlist();
 
-            for ($i = 0; $i < count($_SESSION["playlist"]->liste_pistes); $i++) {
-                $piste = $_SESSION["playlist"]->liste_pistes[$i];
-                $PodcastTrackRender = new \Iutnc\Deefy\Render\PodcastRender($piste);
-                $res .= $PodcastTrackRender->render(1);
-            }
-
-
-
-
-            
+        foreach ($tab as $key => $value) {
+            $render = new AudioListRenderer($value);
+            $res .= <<<HTML
+                <a href="?action=add-track-podcast">{$render->render(1)} </a>
+            HTML;
         }
+
+
 
         return $res;
     }

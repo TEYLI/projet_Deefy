@@ -74,7 +74,9 @@ class Dispatcher
                 <header>
                     <a href="?action=default">accueille</a>
                     <a href="?action=add-playlist">créer playlist</a>
+                    <a href="?action=playlist">afficher vos playlist</a>
                     <a href="?action=add-user">inscription</a>
+
                 </header>
                 $html
             </body>
