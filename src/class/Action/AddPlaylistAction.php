@@ -1,43 +1,64 @@
 <?php
+
 namespace Iutnc\Deefy\Action;
 
-use Iutnc\Deefy\Audio\Lists\Playlists;
-use Iutnc\Deefy\Repository\DeefyRepository;
-use Iutnc\Deefy\Render\AudioListRenderer;
 
 class AddPlaylistAction extends Action
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+
     public function execute(): string
     {
+        $res = "";
+
         if ($this->http_method === "GET") {
-            return <<<HTML
-                <h3>Créer une playlist</h3>
+            $res = <<<HTML
                 <form method="post" action="?action=add-playlist">
-                    <label>Titre de la playlist : <input type="text" name="addPlaylist" required></label>
-                    <button type="submit">Créer</button>
+                    <label> titre Playlist : </label>
+                    <input type="text" name="addPlaylist" >
+                    <button type="submit"> créer</button>
                 </form>
-            HTML;
-        }
+              HTML;
+        } else {
 
-        if (!empty($_POST["addPlaylist"])) {
-            $titre = filter_var($_POST["addPlaylist"], FILTER_SANITIZE_SPECIAL_CHARS);
-            $playlist = new Playlists($titre);
 
-            $repo = DeefyRepository::getInstance();
-            $playlist = $repo->saveEmptyPlaylist($playlist);
+            if (isset($_POST["addPlaylist"])) {
+                $titre = filter_var($_POST["addPlaylist"], FILTER_SANITIZE_SPECIAL_CHARS);
+                $playlist = new \Iutnc\Deefy\Audio\Lists\Playlists($titre);
+                $_SESSION["playlist"] = $playlist;
 
-            $_SESSION["playlist"] = $playlist;
 
-            $audioRender = new AudioListRenderer($playlist);
-            $html = $audioRender->render(1);
+                $audioRender = new \Iutnc\Deefy\Render\AudioListRenderer($playlist);
+                $html = $audioRender->render(1);
 
-            return <<<HTML
+                $res = <<<HTML
                 $html
-                <a href="?action=add-track-podcast">Ajouter un podcast</a> |
-                <a href="?action=add-track-album">Ajouter une piste d'album</a>
-            HTML;
+                <a href="?action=add-track-podcast">Ajouter un podcast</a>
+                <a href="?action=add-track-album">Ajouter une piste</a>
+
+                HTML;
+
+            } else {
+               $audioRender = new \Iutnc\Deefy\Render\AudioListRenderer($_SESSION["playlist"][$_POST["addPlaylist"]] );
+                $html = $audioRender->render(1);
+
+                $res = <<<HTML
+                $html
+                <a href="?action=add-track-podcast">Ajouter un podcast</a>
+                    <a href="?action=add-track-album">Ajouter une piste</a>
+                HTML;
+            }
+
+
+
         }
 
-        return "<p>Erreur : veuillez saisir un nom de playlist.</p>";
+
+
+        return $res;
     }
 }
