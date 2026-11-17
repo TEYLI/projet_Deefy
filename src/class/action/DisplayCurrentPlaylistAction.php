@@ -1,9 +1,9 @@
 <?php
 
-namespace Iutnc\Deefy\Action;
+namespace Iutnc\Deefy\action;
 
-use Iutnc\Deefy\Audio\Lists\Playlists;
-use Iutnc\Deefy\Render\AudioListRenderer;
+use Iutnc\Deefy\audio\lists\Playlists;
+use Iutnc\Deefy\render\AudioListRenderer;
 
 class DisplayCurrentPlaylistAction extends Action
 {

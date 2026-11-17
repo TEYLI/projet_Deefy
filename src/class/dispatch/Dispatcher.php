@@ -1,5 +1,5 @@
 <?php
-namespace iutnc\deefy\dispatch;
+namespace Iutnc\Deefy\dispatch;
 class Dispatcher
 {
     protected ?string $action = null;

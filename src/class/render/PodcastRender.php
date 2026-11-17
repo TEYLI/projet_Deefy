@@ -1,10 +1,10 @@
 <?php
-namespace Iutnc\Deefy\Render;
+namespace Iutnc\Deefy\render;
 final class PodcastRender  extends AudioTrackRender 
 {
-    private \Iutnc\Deefy\Audio\track\PodcastTrack $podcasts;
+    private \Iutnc\Deefy\audio\track\PodcastTrack $podcasts;
 
-    public function __construct(\Iutnc\Deefy\Audio\track\PodcastTrack $PodcastTrack_para)
+    public function __construct(\Iutnc\Deefy\audio\track\PodcastTrack $PodcastTrack_para)
     {
         $this->podcasts = $PodcastTrack_para;
 
@@ -12,12 +12,12 @@ final class PodcastRender  extends AudioTrackRender
 
     public function __get(string $name) : mixed{
         if(property_exists($this, $name)){return $this->$name;}
-        throw new \Iutnc\Deefy\Exception\InvalidPropertyNameException("invalid property : $name");
+        throw new \Iutnc\Deefy\exception\InvalidPropertyNameException("invalid property : $name");
     }
 
     public function __set(string $name, mixed $value): void{
         if(property_exists($this, $name)){ $this->$name = $value;} else{
-        throw new \Iutnc\Deefy\Exception\InvalidPropertyNameException("invalid property : $name");}
+        throw new \Iutnc\Deefy\exception\InvalidPropertyNameException("invalid property : $name");}
     }
     
 

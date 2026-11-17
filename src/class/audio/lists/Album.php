@@ -1,5 +1,5 @@
 <?php
-namespace Iutnc\Deefy\Audio\Lists;
+namespace Iutnc\Deefy\audio\lists;
 class Album extends AudioList
 {
     private string $artiste_album;

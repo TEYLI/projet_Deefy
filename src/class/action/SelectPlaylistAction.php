@@ -1,9 +1,9 @@
 <?php
 
-namespace Iutnc\Deefy\Action;
+namespace Iutnc\Deefy\action;
 
-use Iutnc\Deefy\Audio\Lists\Playlists;
-use Iutnc\Deefy\Repository\DeefyRepository;
+use Iutnc\Deefy\audio\lists\Playlists;
+use Iutnc\Deefy\repository\DeefyRepository;
 
 class SelectPlaylistAction extends Action
 {

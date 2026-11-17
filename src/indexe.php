@@ -7,18 +7,18 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-\Iutnc\Deefy\Repository\DeefyRepository::setConfig(__DIR__ . '/../db.config.ini');
+\Iutnc\Deefy\repository\DeefyRepository::setConfig(__DIR__ . '/../db.config.ini');
 
 $dispatcher = new \Iutnc\Deefy\dispatch\Dispatcher();
 
 $dispatcher
-    ->addRoute('default', \Iutnc\Deefy\Action\DefaultAction::class)
-    ->addRoute('playlists', \Iutnc\Deefy\Action\DisplayPlaylistAction::class)
-    ->addRoute('display-playlist', \Iutnc\Deefy\Action\DisplayPlaylistAction::class)
-    ->addRoute('current-playlist', \Iutnc\Deefy\Action\DisplayCurrentPlaylistAction::class)
-    ->addRoute('add-playlist', \Iutnc\Deefy\Action\AddPlaylistAction::class)
-    ->addRoute('add-track-podcast', \Iutnc\Deefy\Action\AddPodcastTrackAction::class)
-    ->addRoute('add-track-album', \Iutnc\Deefy\Action\AddAlbumTrackAction::class)
-    ->addRoute('select-playlist', \Iutnc\Deefy\Action\SelectPlaylistAction::class);
+    ->addRoute('default', \Iutnc\Deefy\action\DefaultAction::class)
+    ->addRoute('playlists', \Iutnc\Deefy\action\DisplayPlaylistAction::class)
+    ->addRoute('display-playlist', \Iutnc\Deefy\action\DisplayPlaylistAction::class)
+    ->addRoute('current-playlist', \Iutnc\Deefy\action\DisplayCurrentPlaylistAction::class)
+    ->addRoute('add-playlist', \Iutnc\Deefy\action\AddPlaylistAction::class)
+    ->addRoute('add-track-podcast', \Iutnc\Deefy\action\AddPodcastTrackAction::class)
+    ->addRoute('add-track-album', \Iutnc\Deefy\action\AddAlbumTrackAction::class)
+    ->addRoute('select-playlist', \Iutnc\Deefy\action\SelectPlaylistAction::class);
 
 $dispatcher->run();

@@ -1,12 +1,12 @@
 <?php
 
-namespace Iutnc\Deefy\Repository;
+namespace Iutnc\Deefy\repository;
 
 use PDO;
-use Iutnc\Deefy\Audio\Track\AudioTrack;
-use Iutnc\Deefy\Audio\Track\AlbumTrack;
-use Iutnc\Deefy\Audio\Track\PodcastTrack;
-use Iutnc\Deefy\Audio\Lists\Playlists;
+use Iutnc\Deefy\audio\track\AudioTrack;
+use Iutnc\Deefy\audio\track\AlbumTrack;
+use Iutnc\Deefy\audio\track\PodcastTrack;
+use Iutnc\Deefy\audio\lists\Playlists;
 
 class DeefyRepository
 {

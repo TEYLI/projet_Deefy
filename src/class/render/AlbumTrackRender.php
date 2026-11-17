@@ -1,12 +1,12 @@
 <?php
 
-namespace Iutnc\Deefy\Render;
+namespace Iutnc\Deefy\render;
 class AlbumTrackRender extends AudioTrackRender
 {
 
-    private \Iutnc\Deefy\Audio\track\AlbumTrack $albumTrack;
+    private \Iutnc\Deefy\audio\track\AlbumTrack $albumTrack;
 
-    public function __construct(\Iutnc\Deefy\Audio\track\AlbumTrack $albumTrack_para)
+    public function __construct(\Iutnc\Deefy\audio\track\AlbumTrack $albumTrack_para)
     {
         $this->albumTrack = $albumTrack_para;
 
@@ -17,7 +17,7 @@ class AlbumTrackRender extends AudioTrackRender
         if (property_exists($this, $name)) {
             return $this->$name;
         }
-        throw new \Iutnc\Deefy\Exception\InvalidPropertyNameException("invalid property : $name");
+        throw new \Iutnc\Deefy\exception\InvalidPropertyNameException("invalid property : $name");
     }
 
     public function __set(string $name, mixed $value): void
@@ -25,7 +25,7 @@ class AlbumTrackRender extends AudioTrackRender
         if (property_exists($this, $name)) {
             $this->$name = $value;
         } else {
-            throw new \Iutnc\Deefy\Exception\InvalidPropertyNameException("invalid property : $name");
+            throw new \Iutnc\Deefy\exception\InvalidPropertyNameException("invalid property : $name");
         }
     }
 

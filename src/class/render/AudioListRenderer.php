@@ -1,13 +1,13 @@
 <?php
-namespace Iutnc\Deefy\Render;
+namespace Iutnc\Deefy\render;
 
-use Iutnc\Deefy\Audio\Track\AlbumTrack;
+use Iutnc\Deefy\audio\track\AlbumTrack;
 
 class AudioListRenderer implements Renderer
 {
-    private \Iutnc\Deefy\Audio\Lists\AudioList $audioList;
+    private \Iutnc\Deefy\audio\lists\AudioList $audioList;
 
-    public function __construct(\Iutnc\Deefy\Audio\Lists\AudioList $audioList)
+    public function __construct(\Iutnc\Deefy\audio\lists\AudioList $audioList)
     {
         $this->audioList = $audioList;
     }

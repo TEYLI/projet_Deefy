@@ -1,10 +1,10 @@
 <?php
 
-namespace Iutnc\Deefy\Action;
+namespace Iutnc\Deefy\action;
 
-use Iutnc\Deefy\Audio\Lists\Playlists;
-use Iutnc\Deefy\Repository\DeefyRepository;
-use Iutnc\Deefy\Render\AudioListRenderer;
+use Iutnc\Deefy\audio\lists\Playlists;
+use Iutnc\Deefy\repository\DeefyRepository;
+use Iutnc\Deefy\render\AudioListRenderer;
 
 class AddPlaylistAction extends Action
 {
