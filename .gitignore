@@ -1,6 +1,6 @@
 *.ini
 *.mp3
-
+.htaccess
 /vendor/
 
 .vscode/
