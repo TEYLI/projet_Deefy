@@ -113,42 +113,41 @@ class DeefyRepository
 
    
     public function savePiste(AudioTrack $piste): AudioTrack
-    {
-        if ($piste instanceof AlbumTrack) {
-            $query = "INSERT INTO track (titre, genre, duree, filename, type, artiste_album, titre_album, annee_album, numero_album) 
-                      VALUES (:titre, :genre, :duree, :filename, :type, :artiste_album, :titre_album, :annee_album, :numero_album)";
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute([
-                'titre' => $piste->title,
-                'genre' => $piste->genre,
-                'duree' => $piste->duree,
-                'filename' => $piste->nom_fichier,
-                'type' => 'A',
-                'artiste_album' => $piste->artiste,
-                'titre_album' => $piste->album,
-                'annee_album' => $piste->annee,
-                'numero_album' => $piste->numero_pistes
-            ]);
-            $piste->setID((int)$this->pdo->lastInsertId());
-            return $piste;
-        } else {
-            $query = "INSERT INTO track (titre, genre, duree, filename, type, auteur_podcast, date_posdcast)
-                      VALUES (:titre, :genre, :duree, :filename, :type, :auteur_podcast, :date_posdcast)";
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute([
-                'titre' => $piste->title,
-                'genre' => $piste->genre,
-                'duree' => $piste->duree,
-                'filename' => $piste->nom_fichier,
-                'type' => 'P',
-                'auteur_podcast' => $piste->artiste,
-                'date_posdcast' => $piste->date
-            ]);
-            $piste->setID((int)$this->pdo->lastInsertId());
-            return $piste;
-        }
+{
+    if ($piste instanceof AlbumTrack) {
+        $query = "INSERT INTO track (titre, genre, duree, filename, type, artiste_album, titre_album, annee_album, numero_album) 
+                  VALUES (:titre, :genre, :duree, :filename, :type, :artiste_album, :titre_album, :annee_album, :numero_album)";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([
+            'titre' => $piste->title,
+            'genre' => $piste->genre,
+            'duree' => $piste->duree,
+            'filename' => $piste->nom_fichier,
+            'type' => 'A',
+            'artiste_album' => $piste->artiste,
+            'titre_album' => $piste->album,
+            'annee_album' => $piste->annee,
+            'numero_album' => $piste->numero_pistes
+        ]);
+        $piste->setID((int)$this->pdo->lastInsertId());
+        return $piste;
+    } else {
+        $query = "INSERT INTO track (titre, genre, duree, filename, type, auteur_podcast, date_podcast) 
+                  VALUES (:titre, :genre, :duree, :filename, :type, :auteur_podcast, :date_podcast)";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([
+            'titre' => $piste->title,
+            'genre' => $piste->genre,
+            'duree' => $piste->duree,
+            'filename' => $piste->nom_fichier,
+            'type' => 'P',
+            'auteur_podcast' => $piste->artiste,
+            'date_podcast' => $piste->date
+        ]);
+        $piste->setID((int)$this->pdo->lastInsertId());
+        return $piste;
     }
-
+}
     
     public function addTrackToPlaylist(int $idPlaylist, int $idTrack, int $noPiste): void
     {

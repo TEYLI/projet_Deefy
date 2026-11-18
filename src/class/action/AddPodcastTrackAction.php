@@ -11,10 +11,8 @@ class AddPodcastTrackAction extends Action
         parent::__construct();
     }
 
-
     public function execute(): string
     {
-
         $info = "";
         $res = "";
 
@@ -66,97 +64,73 @@ class AddPodcastTrackAction extends Action
                 }
             }
 
-            //values input
-            $titre = filter_var($_POST["titre"], FILTER_SANITIZE_SPECIAL_CHARS);
-            $duree = filter_var($_POST["temps"], FILTER_SANITIZE_NUMBER_INT);
-            $auteur = filter_var($_POST["auteur"], FILTER_SANITIZE_SPECIAL_CHARS);
-            $genre = filter_var($_POST["genre"], FILTER_SANITIZE_SPECIAL_CHARS);
-            $date = filter_var($_POST["date"], FILTER_SANITIZE_SPECIAL_CHARS);
-
             if (!isset($_SESSION["playlist"])) {
                 return '<div class="alert alert-warning">Aucune playlist courante. <a href="?action=add-playlist">Créer une playlist</a></div>';
             }
 
-            //upload mp3
-            $mp3 = "";
-            $destination = "";
+            $titre = filter_var($_POST["titre"], FILTER_SANITIZE_SPECIAL_CHARS);
+            $duree = (int)filter_var($_POST["temps"], FILTER_SANITIZE_NUMBER_INT);
+            $auteur = filter_var($_POST["auteur"], FILTER_SANITIZE_SPECIAL_CHARS);
+            $genre = filter_var($_POST["genre"], FILTER_SANITIZE_SPECIAL_CHARS);
+            $date = filter_var($_POST["date"], FILTER_SANITIZE_SPECIAL_CHARS);
 
-            if (substr($_FILES["mp3"]["name"], -4) === ".mp3" && $_FILES["mp3"]["type"] === "audio/mpeg") {
+            if (
+                isset($_FILES["mp3"]) &&
+                $_FILES["mp3"]["error"] === UPLOAD_ERR_OK &&
+                str_ends_with(strtolower($_FILES["mp3"]["name"]), ".mp3") &&
+                $_FILES["mp3"]["type"] === "audio/mpeg"
+            ) {
                 $mp3 = $_FILES["mp3"]["tmp_name"];
                 $filename = uniqid();
 
-                $destination = dirname(__DIR__) . "/audio/" . $filename . ".mp3";
-                $src = $filename . ".mp3";
+                $destination = dirname(__DIR__, 3) . "/audio/" . $filename . ".mp3";
+                $src = "audio/" . $filename . ".mp3";
 
                 if (!move_uploaded_file($mp3, $destination)) {
-                    return "<p> téléchargement non valide</p>";
+                    return '<div class="alert alert-danger">Téléchargement non valide : vérifiez les droits du dossier audio/.</div>';
                 }
-
             } else {
-
-                return "<p>" . $_FILES["mp3"]["tmp_name"] . "n'est pas un fichier .mp3</p>";
-
+                return '<div class="alert alert-danger">Le fichier envoyé n\'est pas un fichier .mp3 valide.</div>';
             }
 
+            $piste = new \Iutnc\Deefy\audio\track\PodcastTrack($date, $titre, $src);
+            $piste->duree = $duree;
+            $piste->genre = $genre;
+            $piste->artiste = $auteur;
 
+            $playlist = $_SESSION["playlist"];
+            $playlist->add_piste($piste);
 
-            if ((isset($_SESSION["playlist"]))) {
+            $repository = DeefyRepository::getInstance();
+            $repository->savePiste($piste);
+            $repository->addTrackToPlaylist(
+                $playlist->getID(),
+                $piste->getID(),
+                $playlist->nb_pistes
+            );
 
+            $info = '<div class="alert alert-success d-flex align-items-center gap-2" role="status"><span class="fw-bold">✓</span><span>Téléchargement effectué avec succès.</span></div>';
 
-                $piste = new \Iutnc\Deefy\audio\track\PodcastTrack($date, $titre, $src);
-                $piste->duree = $duree;
-                $piste->genre = $genre;
-                $piste->artiste = $auteur;
-                $playlist = $_SESSION["playlist"];
-                $repository = DeefyRepository::getInstance();
-                $repository->savePiste($piste);
-                $repository->addTrackToPlaylist(
-                    $playlist->getID(),
-                    $piste->getID(),
-                    $playlist->nb_pistes
-                );
-                $playlist->add_piste($piste);
-                $info = '<div class="alert alert-success d-flex align-items-center gap-2" role="status"><span class="fw-bold">✓</span><span>Téléchargement effectué avec succès.</span></div>';
-
-
-
-                $html = "";
-
-                foreach ($_SESSION["playlist"]->liste_pistes as $value) {
-
-                    if ($value instanceof \Iutnc\Deefy\audio\track\AlbumTrack) {
-
-                        $trackRender = new \Iutnc\Deefy\render\AlbumTrackRender($value);
-
-                    } elseif ($value instanceof \Iutnc\Deefy\audio\track\PodcastTrack) {
-
-                        $trackRender = new \Iutnc\Deefy\render\PodcastRender($value);
-
-                    }
-
-                    $html .= $trackRender->render(2);
+            $html = "";
+            foreach ($playlist->liste_pistes as $value) {
+                if ($value instanceof \Iutnc\Deefy\audio\track\AlbumTrack) {
+                    $trackRender = new \Iutnc\Deefy\render\AlbumTrackRender($value);
+                } elseif ($value instanceof \Iutnc\Deefy\audio\track\PodcastTrack) {
+                    $trackRender = new \Iutnc\Deefy\render\PodcastRender($value);
                 }
-
-                $res = <<<HTML
-                    $info
-                    $html
-                    <div class="d-flex flex-wrap gap-2 mt-3">
-                        <a class="btn btn-primary" href="?action=add-track-podcast">Ajouter encore un podcast</a>
-                        <a class="btn btn-outline-primary" href="?action=add-track-album">Ajouter encore une piste d'album</a>
-                    </div>
-                HTML;
-
-
-            } else {
-                $res = <<<HTML
-                    $info
-                    <a class="btn btn-primary" href="?action=add-playlist">Créer une playlist</a>
-                HTML;
+                $html .= $trackRender->render(2);
             }
 
+            $res = <<<HTML
+                $info
+                $html
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <a class="btn btn-primary" href="?action=add-track-podcast">Ajouter encore un podcast</a>
+                    <a class="btn btn-outline-primary" href="?action=add-track-album">Ajouter encore une piste d'album</a>
+                </div>
+            HTML;
         }
 
         return $res;
-
     }
 }
