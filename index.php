@@ -3,11 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 session_start();
 
-\Iutnc\Deefy\repository\DeefyRepository::setConfig(__DIR__ . '/../db.config.ini');
+\Iutnc\Deefy\repository\DeefyRepository::setConfig(__DIR__ . '/db.config.ini');
 
 $dispatcher = new \Iutnc\Deefy\dispatch\Dispatcher();
 

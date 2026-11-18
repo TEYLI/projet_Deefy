@@ -1,2 +1,7 @@
-*.mp3
 *.ini
+
+/vendor/
+
+.vscode/
+.idea/
+.DS_Store
