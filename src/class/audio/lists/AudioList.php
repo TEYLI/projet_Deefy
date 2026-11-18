@@ -1,6 +1,6 @@
 <?php
 
-namespace Iutnc\Deefy\Audio\Lists;
+namespace Iutnc\Deefy\audio\lists;
 
 
 class AudioList
@@ -21,7 +21,7 @@ class AudioList
 
     public function __get(string $name) : mixed{
         if(property_exists($this, $name)){return $this->$name;}
-        throw new \Seance5\Iutnc\Deefy\Exception\InvalidPropertyNameException("invalid property : $name");
+        throw new Iutnc\Deefy\exception\InvalidPropertyNameException("invalid property : $name");
     }
 
     public function setID(int $id) : void{

@@ -1,8 +1,8 @@
 <?php
 
-namespace Iutnc\Deefy\Audio\Track;
+namespace Iutnc\Deefy\audio\track;
 
-//use Seance5\Iutnc\Deefy\Audio\track\AlbumTrack as AlbumTrack ;
+//use Seance5\Iutnc\Deefy\audio\track\AlbumTrack as AlbumTrack ;
 
 class AlbumTrack extends AudioTrack
 {
@@ -24,18 +24,18 @@ class AlbumTrack extends AudioTrack
 
     public function __get(string $name) : mixed{
         if(property_exists($this, $name)){return $this->$name;}
-        throw new \Iutnc\Deefy\Exception\InvalidPropertyNameException("invalid property : $name");
+        throw new \Iutnc\Deefy\exception\InvalidPropertyNameException("invalid property : $name");
     }
 
     public function __set(string $name, mixed $value): void
     {
         if ($value < 0 and $name === "duree") {
-            throw new \Iutnc\Deefy\Exception\InvalidPropertyValueException("argument invalid : $value");
+            throw new \Iutnc\Deefy\exception\InvalidPropertyValueException("argument invalid : $value");
         } else {
             if (property_exists($this, $name)) {
                 $this->$name = $value;
             } else {
-                throw new \Iutnc\Deefy\Exception\InvalidPropertyNameException("invalid property : $name");
+                throw new \Iutnc\Deefy\exception\InvalidPropertyNameException("invalid property : $name");
             }
         }
     }

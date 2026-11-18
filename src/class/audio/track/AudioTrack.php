@@ -1,6 +1,6 @@
 <?php
 
-namespace Iutnc\Deefy\Audio\Track;
+namespace Iutnc\Deefy\audio\track;
 
 //use Seance5\Iutnc\Deefy\track\AudioTrack as AuiTrack;
 
@@ -14,6 +14,7 @@ class AudioTrack
     protected array $liste_pistes;
     
     protected string $nom_fichier;
+    protected int $id;
 
     public function __construct(string $title, string $nom_fichier){
         $this->title = $title;
@@ -26,18 +27,18 @@ class AudioTrack
 
     public function __get(string $name) : mixed{
         if(property_exists($this, $name)){return $this->$name;}
-        throw new \Iutnc\Deefy\Exception\InvalidPropertyNameException("invalid property : $name");
+        throw new \Iutnc\Deefy\exception\InvalidPropertyNameException("invalid property : $name");
     }
 
     public function __set(string $name, mixed $value): void
     {
         if ($value < 0 and $name === "duree") {
-            throw new \Iutnc\Deefy\Exception\InvalidPropertyValueException("argument invalid : $value");
+            throw new \Iutnc\Deefy\exception\InvalidPropertyValueException("argument invalid : $value");
         } else {
             if (property_exists($this, $name)) {
                 $this->$name = $value;
             } else {
-                throw new \Iutnc\Deefy\Exception\InvalidPropertyNameException("invalid property : $name");
+                throw new \Iutnc\Deefy\exception\InvalidPropertyNameException("invalid property : $name");
             }
         }
     }

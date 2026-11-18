@@ -1,12 +1,12 @@
 <?php
 
-namespace Iutnc\Deefy\Audio\Lists;
+namespace Iutnc\Deefy\audio\lists;
 
 
 
 class Playlists extends AudioList 
 {
-    public function add_piste (\Iutnc\Deefy\Audio\Track\AudioTrack $piste){
+    public function add_piste (\Iutnc\Deefy\audio\track\AudioTrack $piste){
         $this->liste_pistes[]=$piste;
         $this->nb_pistes++;
         $this->duree_total+=$piste->duree;

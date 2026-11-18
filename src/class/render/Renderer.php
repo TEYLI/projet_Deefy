@@ -1,5 +1,5 @@
 <?php
-namespace Iutnc\Deefy\Render;
+namespace Iutnc\Deefy\render;
 interface Renderer
 {
     public const COMPACT = 1;

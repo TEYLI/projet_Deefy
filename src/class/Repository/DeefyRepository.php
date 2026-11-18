@@ -70,9 +70,6 @@ class DeefyRepository
         return $tab_playlists;
     }
 
-
-    
-
     // F2 : Charger une playlist complète et toutes ses pistes par son ID
     public function findPlaylistById(int $id): ?Playlists
     {
