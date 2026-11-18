@@ -2,7 +2,7 @@
 
 **Binôme :** Holvec Ange & Le Madec Jean 
 **Dépôt Git :** `https://github.com/TEYLI/projet_Deefy`  
-**URL de test (webetu) :** `https://webetu.iutnc.univ-lorraine.fr/~<identifiant>/projet_Deefy/`  
+**URL de test (webetu) :** `https://webetu.iutnc.univ-lorraine.fr/e79363u/projet_Deefy/`  
 
 ---
 
