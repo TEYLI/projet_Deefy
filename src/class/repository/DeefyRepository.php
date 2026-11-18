@@ -70,14 +70,7 @@ class DeefyRepository
         return $tab_playlists;
     }
 
-<<<<<<< HEAD:src/class/Repository/DeefyRepository.php
-
     
-
-    // F2 : Charger une playlist complète et toutes ses pistes par son ID
-=======
-    
->>>>>>> 45f44df90f953e5e2958a2c664af934b95a2137f:src/class/repository/DeefyRepository.php
     public function findPlaylistById(int $id): ?Playlists
     {
         $stmt = $this->pdo->prepare("SELECT id, nom FROM playlist WHERE id = :id");
