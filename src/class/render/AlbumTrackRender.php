@@ -38,7 +38,7 @@ class AlbumTrackRender extends AudioTrackRender
         $title = htmlspecialchars($data->title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $album = htmlspecialchars($data->album, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $trackNumber = htmlspecialchars((string) $data->numero_pistes, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-        $audioFile = htmlspecialchars($data->nom_fichier, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $audioFile = $this->audioSource($data->nom_fichier);
         switch ($selector) {
             case Renderer::COMPACT:
                 $res =

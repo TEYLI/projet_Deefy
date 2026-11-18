@@ -27,7 +27,7 @@ final class PodcastRender  extends AudioTrackRender
         $data = json_decode($this->podcasts);
         $title = htmlspecialchars($data->title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $date = htmlspecialchars($data->date, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-        $audioFile = htmlspecialchars($data->nom_fichier, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $audioFile = $this->audioSource($data->nom_fichier);
         switch ($selector) {
             case Renderer::COMPACT:
                 $res =

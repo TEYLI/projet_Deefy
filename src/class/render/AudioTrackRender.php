@@ -4,6 +4,15 @@ namespace Iutnc\Deefy\render;
 
 abstract class AudioTrackRender implements Renderer {
 
+    protected function audioSource(string $path): string
+    {
+        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
+        $basePath = rtrim(dirname($scriptName), '/\\');
+        $url = $basePath . '/class/audio/' . rawurlencode(basename($path));
+
+        return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    }
+
     public function render(int $selector): string
     {
         $res = "";

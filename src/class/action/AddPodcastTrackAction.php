@@ -2,6 +2,8 @@
 
 namespace Iutnc\Deefy\action;
 
+use Iutnc\Deefy\repository\DeefyRepository;
+
 class AddPodcastTrackAction extends Action
 {
     public function __construct()
@@ -45,6 +47,10 @@ class AddPodcastTrackAction extends Action
                                             <label class="form-label" for="podcast-genre">Genre</label>
                                             <input class="form-control" id="podcast-genre" type="text" name="genre" required>
                                         </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label" for="podcast-author">Auteur</label>
+                                            <input class="form-control" id="podcast-author" type="text" name="auteur" required>
+                                        </div>
                                     </div>
                                     <button class="btn btn-primary mt-4" type="submit">Ajouter</button>
                                 </form>
@@ -54,14 +60,22 @@ class AddPodcastTrackAction extends Action
                 </div>
               HTML;
         } else {
+            foreach (["titre", "temps", "auteur", "genre", "date"] as $field) {
+                if (!isset($_POST[$field]) || $_POST[$field] === "") {
+                    return '<div class="alert alert-danger">Veuillez remplir tous les champs du formulaire, y compris l’auteur.</div>';
+                }
+            }
+
             //values input
             $titre = filter_var($_POST["titre"], FILTER_SANITIZE_SPECIAL_CHARS);
             $duree = filter_var($_POST["temps"], FILTER_SANITIZE_NUMBER_INT);
             $auteur = filter_var($_POST["auteur"], FILTER_SANITIZE_SPECIAL_CHARS);
             $genre = filter_var($_POST["genre"], FILTER_SANITIZE_SPECIAL_CHARS);
-            $nomPlaylist = filter_var($_POST["nomPlaylist"], FILTER_SANITIZE_SPECIAL_CHARS);
             $date = filter_var($_POST["date"], FILTER_SANITIZE_SPECIAL_CHARS);
 
+            if (!isset($_SESSION["playlist"])) {
+                return '<div class="alert alert-warning">Aucune playlist courante. <a href="?action=add-playlist">Créer une playlist</a></div>';
+            }
 
             //upload mp3
             $mp3 = "";
@@ -71,25 +85,10 @@ class AddPodcastTrackAction extends Action
                 $mp3 = $_FILES["mp3"]["tmp_name"];
                 $filename = uniqid();
 
-
-
                 $destination = dirname(__DIR__) . "/audio/" . $filename . ".mp3";
-                $src = "/DevWeb-PHP/Deefy/src/class/audio/" . $filename . ".mp3";
+                $src = $filename . ".mp3";
 
-
-
-
-                if (move_uploaded_file($mp3, $destination)) {
-
-                    if (isset($_SESSION["playlist"])) {
-                        print "<p> téléchargement avec succès </p>";
-                    } else {
-                        print "<p> la playlist " . $nomPlaylist . " n'existe pas <p>";
-                    }
-
-
-
-                } else {
+                if (!move_uploaded_file($mp3, $destination)) {
                     return "<p> téléchargement non valide</p>";
                 }
 
@@ -108,7 +107,16 @@ class AddPodcastTrackAction extends Action
                 $piste->duree = $duree;
                 $piste->genre = $genre;
                 $piste->artiste = $auteur;
-                $_SESSION["playlist"]->add_piste($piste);
+                $playlist = $_SESSION["playlist"];
+                $repository = DeefyRepository::getInstance();
+                $repository->savePiste($piste);
+                $repository->addTrackToPlaylist(
+                    $playlist->getID(),
+                    $piste->getID(),
+                    $playlist->nb_pistes
+                );
+                $playlist->add_piste($piste);
+                $info = '<div class="alert alert-success d-flex align-items-center gap-2" role="status"><span class="fw-bold">✓</span><span>Téléchargement effectué avec succès.</span></div>';
 
 
 
@@ -129,19 +137,20 @@ class AddPodcastTrackAction extends Action
                     $html .= $trackRender->render(2);
                 }
 
-
-
-
                 $res = <<<HTML
+                    $info
                     $html
-                    <a href="?action=add-track-podcast">Ajouter encore un podcast</a>
-                    <a href="?action=add-track-album">Ajouter encore une piste</a>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <a class="btn btn-primary" href="?action=add-track-podcast">Ajouter encore un podcast</a>
+                        <a class="btn btn-outline-primary" href="?action=add-track-album">Ajouter encore une piste d'album</a>
+                    </div>
                 HTML;
 
 
             } else {
                 $res = <<<HTML
-                    <a href="?action=add-playlist">creer une playlist</a>
+                    $info
+                    <a class="btn btn-primary" href="?action=add-playlist">Créer une playlist</a>
                 HTML;
             }
 

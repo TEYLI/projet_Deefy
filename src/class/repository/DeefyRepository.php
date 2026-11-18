@@ -99,7 +99,7 @@ class DeefyRepository
                 $track->artiste = $t['artiste_album'];
                 $track->annee = (int)$t['annee_album'];
             } else {
-                $track = new PodcastTrack($t['date_podcast'] ?? '', $t['titre'], $t['filename']);
+                $track = new PodcastTrack($t['date_posdcast'] ?? '', $t['titre'], $t['filename']);
                 $track->artiste = $t['auteur_podcast'];
             }
             $track->genre = $t['genre'];
@@ -132,8 +132,8 @@ class DeefyRepository
             $piste->setID((int)$this->pdo->lastInsertId());
             return $piste;
         } else {
-            $query = "INSERT INTO track (titre, genre, duree, filename, type, auteur_podcast, date_podcast) 
-                      VALUES (:titre, :genre, :duree, :filename, :type, :auteur_podcast, :date_podcast)";
+            $query = "INSERT INTO track (titre, genre, duree, filename, type, auteur_podcast, date_posdcast)
+                      VALUES (:titre, :genre, :duree, :filename, :type, :auteur_podcast, :date_posdcast)";
             $stmt = $this->pdo->prepare($query);
             $stmt->execute([
                 'titre' => $piste->title,
@@ -142,7 +142,7 @@ class DeefyRepository
                 'filename' => $piste->nom_fichier,
                 'type' => 'P',
                 'auteur_podcast' => $piste->artiste,
-                'date_podcast' => $piste->date
+                'date_posdcast' => $piste->date
             ]);
             $piste->setID((int)$this->pdo->lastInsertId());
             return $piste;
